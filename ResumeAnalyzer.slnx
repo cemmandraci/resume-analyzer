@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ResumeAnalyzer.API/ResumeAnalyzer.API.csproj" />
+    <Project Path="src/ResumeAnalyzer.Application/ResumeAnalyzer.Application.csproj" />
+    <Project Path="src/ResumeAnalyzer.Domain/ResumeAnalyzer.Domain.csproj" />
+    <Project Path="src/ResumeAnalyzer.Infrastructure/ResumeAnalyzer.Infrastructure.csproj" />
+  </Folder>
+</Solution>
