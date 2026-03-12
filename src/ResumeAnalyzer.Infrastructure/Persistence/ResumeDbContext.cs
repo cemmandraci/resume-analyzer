@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ResumeAnalyzer.Domain.Entities;
+using ResumeAnalyzer.Domain.ValueObjects;
 
 namespace ResumeAnalyzer.Infrastructure.Persistence;
 
@@ -15,6 +16,7 @@ public class ResumeDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Ignore<Skill>();
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ResumeDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
     }
