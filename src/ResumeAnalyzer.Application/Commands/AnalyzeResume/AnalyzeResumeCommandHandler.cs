@@ -35,13 +35,11 @@ public class AnalyzeResumeCommandHandler : IRequestHandler<AnalyzeResumeCommand,
             rawText,
             analysisService.ProviderName);
 
+        resume.MarkAsProcessing();
         await _resumeRepository.AddAsync(resume, cancellationToken);
 
         try
         {
-            resume.MarkAsProcessing();
-            await _resumeRepository.UpdateAsync(resume, cancellationToken);
-
             var analysisResult = await analysisService.AnalyzeAsync(
                 rawText, cancellationToken);
 
@@ -54,6 +52,8 @@ public class AnalyzeResumeCommandHandler : IRequestHandler<AnalyzeResumeCommand,
                 analysisResult.Strengths,
                 analysisResult.Weaknesses,
                 analysisResult.Suggestions);
+
+            await _resumeRepository.AddAnalysisAsync(analysis, cancellationToken);
             
             resume.MarkAsCompleted(analysis);
             await _resumeRepository.UpdateAsync(resume, cancellationToken);

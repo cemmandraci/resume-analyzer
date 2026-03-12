@@ -74,7 +74,7 @@ public class ResumeController : ControllerBase
         return Ok(result);
     }
     
-    [HttpGet("{id:guid}/match")]
+    [HttpPost("{id:guid}/match")]
     [ProducesResponseType(typeof(JobMatchDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> MatchJob(

@@ -23,8 +23,7 @@ public class GeminiResumeAnalysisService : BaseResumeAnalysisService
                   ?? throw new InvalidOperationException("Gemini API key is not configured");
         _jsonSerializerOptions = new JsonSerializerOptions
         {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            PropertyNameCaseInsensitive = true,
+            PropertyNameCaseInsensitive = true
         };
     }
 
@@ -38,11 +37,11 @@ public class GeminiResumeAnalysisService : BaseResumeAnalysisService
         {
             SystemInstruction = new GeminiSystemInstruction
             {
-                Parts = new GeminiPart
+                Parts = [new GeminiPart
                 {
                     Text =
                         "You are an expert HR analyst and career coach.Always respond with valid JSON only, no markdown, no extra text."
-                }
+                }]
             },
             Contents =
             [
@@ -58,12 +57,19 @@ public class GeminiResumeAnalysisService : BaseResumeAnalysisService
             }
         };
 
-        var json = JsonSerializer.Serialize((request, _jsonSerializerOptions));
+        var json = JsonSerializer.Serialize((request));
+        Console.WriteLine("GEMINI REQUEST");
+        Console.WriteLine(json);
+        Console.WriteLine("==============================");
         var content = new StringContent(json, Encoding.UTF8, "application/json");
         
         var url = $"v1beta/models/{Model}:generateContent?key={_apiKey}";
         var response = await client.PostAsync(url, content, cancellationToken);
-        response.EnsureSuccessStatusCode();
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorBody = await response.Content.ReadAsStringAsync(cancellationToken);
+            throw new InvalidOperationException($"Gemini API error {response.StatusCode}: {errorBody}");
+        }
 
         var responseBody = await response.Content.ReadAsStringAsync(cancellationToken);
         var geminiResponse = JsonSerializer.Deserialize<GeminiResponse>(responseBody, _jsonSerializerOptions)

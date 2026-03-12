@@ -20,8 +20,11 @@ public class WorkExperienceConfiguration : IEntityTypeConfiguration<WorkExperien
             .HasMaxLength(200);
 
         builder.Property(x => x.Description)
-            .IsRequired()
+            .IsRequired(false)
             .HasMaxLength(2000);
+
+        builder.Property(x => x.EndDate)
+            .IsRequired(false);
         
         builder.Property<List<string>>("_responsibilities")
             .HasColumnName("Responsibilities")

@@ -19,6 +19,7 @@ public class JobMatchConfiguration : IEntityTypeConfiguration<JobMatch>
             .IsRequired();
 
         builder.Property(x => x.AIFeedBack)
+            .IsRequired(false)
             .HasMaxLength(5000);
         
         builder.Property<List<string>>("_matchingSkills")

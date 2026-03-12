@@ -22,5 +22,11 @@ public class EducationConfiguration : IEntityTypeConfiguration<Education>
         builder.Property(x => x.Field)
             .IsRequired()
             .HasMaxLength(200);
+
+        builder.Property(x => x.EndDate)
+            .IsRequired(false);
+
+        builder.Property(x => x.GPA)
+            .IsRequired(false);
     }
 }

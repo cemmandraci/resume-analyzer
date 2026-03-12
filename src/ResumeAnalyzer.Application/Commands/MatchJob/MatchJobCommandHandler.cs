@@ -42,7 +42,6 @@ public class MatchJobCommandHandler : IRequestHandler<MatchJobCommand,JobMatchDt
             matchResult.AIFeedback);
         
         resume.Analysis.AddJobMatch(jobMatch);
-        await _resumeRepository.UpdateAsync(resume, cancellationToken);
 
         return new JobMatchDto
         {

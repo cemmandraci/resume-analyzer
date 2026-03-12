@@ -43,6 +43,18 @@ public class ResumeRepository : IResumeRepository
         await _context.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task AddAnalysisAsync(ResumeAnalysis analysis, CancellationToken cancellationToken = default)
+    {
+        await _context.ResumeAnalyses.AddAsync(analysis, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task AddJobMatchAsync(JobMatch jobMatch, CancellationToken cancellationToken = default)
+    {
+        await _context.JobMatches.AddAsync(jobMatch, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task<IReadOnlyList<Resume>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         return await _context.Resumes
